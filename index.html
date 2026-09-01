@@ -1,0 +1,448 @@
+<title>Confidentialité DrinkLog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Public+Sans:wght@400;500;600&display=swap">
+
+<style>
+  :root {
+    --paper:      #FCFBF9;
+    --paper-2:    #F5F2EC;
+    --ink:        #1A1917;
+    --ink-soft:   #55524C;
+    --ink-faint:  #8A867E;
+    --rule:       #E7E2D9;
+    --accent:     #B45309;
+    --accent-ink: #96450A;
+    --accent-weak:#FAF2E6;
+    --shadow:     0 1px 2px rgba(26,25,23,.05), 0 12px 32px -12px rgba(26,25,23,.12);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #141311;
+      --paper-2:    #1D1B17;
+      --ink:        #ECE8E1;
+      --ink-soft:   #ABA69C;
+      --ink-faint:  #7C776D;
+      --rule:       #2E2B25;
+      --accent:     #E7A34A;
+      --accent-ink: #F0B978;
+      --accent-weak:#241D11;
+      --shadow:     0 1px 2px rgba(0,0,0,.3), 0 14px 40px -14px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #141311;
+    --paper-2:    #1D1B17;
+    --ink:        #ECE8E1;
+    --ink-soft:   #ABA69C;
+    --ink-faint:  #7C776D;
+    --rule:       #2E2B25;
+    --accent:     #E7A34A;
+    --accent-ink: #F0B978;
+    --accent-weak:#241D11;
+    --shadow:     0 1px 2px rgba(0,0,0,.3), 0 14px 40px -14px rgba(0,0,0,.5);
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Public Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .wrap {
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: clamp(2.25rem, 5vw, 4.5rem) clamp(1.15rem, 5vw, 2.5rem) 5rem;
+  }
+
+  /* ---- Header ---- */
+  .eyebrow {
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    margin: 0 0 .9rem;
+  }
+  h1 {
+    font-family: "Newsreader", Georgia, "Times New Roman", serif;
+    font-weight: 500;
+    font-size: clamp(2.5rem, 8vw, 3.6rem);
+    line-height: 1.05;
+    letter-spacing: -.01em;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .meta {
+    margin-top: 1.1rem;
+    font-size: .9rem;
+    color: var(--ink-faint);
+  }
+  .meta b { color: var(--ink-soft); font-weight: 600; }
+
+  /* ---- Summary card ---- */
+  .summary {
+    margin: 2.5rem 0 0;
+    background: var(--accent-weak);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 1.4rem 1.5rem 1.5rem;
+  }
+  .summary h2 {
+    font-family: "Public Sans", sans-serif;
+    font-size: .74rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    margin: 0 0 .8rem;
+    font-weight: 600;
+  }
+  .summary ul { margin: 0; padding-left: 1.15rem; }
+  .summary li { margin: .38rem 0; color: var(--ink-soft); }
+  .summary li::marker { color: var(--accent); }
+
+  /* ---- Table of contents ---- */
+  nav.toc {
+    margin: 2.75rem 0 0;
+    padding: 0;
+  }
+  nav.toc h2 {
+    font-size: .74rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+    margin: 0 0 .7rem;
+  }
+  nav.toc ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: toc;
+    columns: 2;
+    column-gap: 2rem;
+  }
+  nav.toc li {
+    counter-increment: toc;
+    margin: .28rem 0;
+    break-inside: avoid;
+    font-size: .92rem;
+  }
+  nav.toc a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    display: flex;
+    gap: .55rem;
+  }
+  nav.toc a::before {
+    content: counter(toc);
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    min-width: 1.1rem;
+    text-align: right;
+    font-weight: 600;
+  }
+  nav.toc a:hover { color: var(--accent-ink); }
+
+  /* ---- Sections ---- */
+  main { counter-reset: sec; }
+  section {
+    margin-top: 3rem;
+    padding-top: 2.75rem;
+    border-top: 1px solid var(--rule);
+  }
+  section:first-child { border-top: 0; }
+  h2.sec {
+    counter-increment: sec;
+    font-family: "Newsreader", Georgia, serif;
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 1.25;
+    margin: 0 0 1rem;
+    display: flex;
+    gap: .7rem;
+    text-wrap: balance;
+  }
+  h2.sec::before {
+    content: counter(sec);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.9;
+    flex: none;
+  }
+  h3 {
+    font-family: "Public Sans", sans-serif;
+    font-size: .96rem;
+    font-weight: 600;
+    margin: 1.6rem 0 .4rem;
+    color: var(--ink);
+  }
+  p { margin: .85rem 0; }
+  a { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 2px; }
+  strong { font-weight: 600; }
+
+  ul.body, ol.body { margin: .85rem 0; padding-left: 1.3rem; }
+  ul.body li, ol.body li { margin: .4rem 0; }
+  ul.body li::marker { color: var(--accent); }
+
+  .lede { font-size: 1.06rem; color: var(--ink-soft); }
+
+  /* placeholder token the publisher must fill in */
+  .ph {
+    background: var(--accent-weak);
+    color: var(--accent-ink);
+    border: 1px dashed var(--accent);
+    border-radius: 4px;
+    padding: .05em .4em;
+    font-size: .9em;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* table */
+  .tablewrap { overflow-x: auto; margin: 1.1rem 0; border: 1px solid var(--rule); border-radius: 6px; }
+  table { border-collapse: collapse; width: 100%; font-size: .9rem; min-width: 34rem; }
+  th, td { text-align: left; padding: .7rem .85rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { background: var(--paper-2); font-weight: 600; color: var(--ink-soft); font-size: .8rem; letter-spacing: .04em; text-transform: uppercase; }
+  tr:last-child td { border-bottom: 0; }
+
+  .callout {
+    margin: 1.4rem 0;
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 1rem 1.2rem;
+    font-size: .95rem;
+    color: var(--ink-soft);
+  }
+
+  footer {
+    margin-top: 3.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--rule);
+    font-size: .86rem;
+    color: var(--ink-faint);
+  }
+  footer p { margin: .6rem 0; }
+
+  @media (max-width: 34rem) {
+    nav.toc ol { columns: 1; }
+  }
+
+  @media print {
+    :root {
+      --paper:#fff; --paper-2:#fff; --ink:#000; --ink-soft:#222; --ink-faint:#444;
+      --rule:#bbb; --accent:#000; --accent-ink:#000; --accent-weak:#fff; --shadow:none;
+    }
+    body { font-size: 11pt; }
+    .wrap { max-width: none; padding: 0; }
+    nav.toc, .no-print { display: none; }
+    section { break-inside: avoid-page; }
+    a { text-decoration: none; color: #000; }
+    .ph { border: 1px solid #000; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">Politique de confidentialité</p>
+    <h1>DrinkLog</h1>
+    <p class="meta">
+      Dernière mise à jour&nbsp;: <b>1<sup>er</sup> septembre 2026</b><br>
+      Responsable du traitement&nbsp;: <b>Ken Lambert</b> · Contact&nbsp;: <a href="mailto:drinklog.app@gmail.com">drinklog.app@gmail.com</a>
+    </p>
+  </header>
+
+  <div class="summary">
+    <h2>En bref</h2>
+    <ul>
+      <li>Sans compte, tes données restent uniquement sur ton téléphone.</li>
+      <li>Avec un compte, ton e-mail et tes données sont hébergés dans l'Union européenne (Supabase).</li>
+      <li>L'application peut afficher des publicités (Google AdMob) ; tu peux les retirer définitivement par un achat intégré.</li>
+      <li>Aucune revente de tes données, aucun outil de mesure d'audience tiers.</li>
+      <li>Dans un groupe, les autres membres voient ton pseudo et tes totaux de litres par période — jamais le détail de tes consommations.</li>
+      <li>Tu peux consulter, corriger ou supprimer toutes tes données à tout moment.</li>
+      <li>Application réservée aux personnes ayant l'âge légal de consommer de l'alcool (18&nbsp;ans en France).</li>
+    </ul>
+  </div>
+
+  <nav class="toc" aria-label="Sommaire">
+    <h2>Sommaire</h2>
+    <ol>
+      <li><a href="#s1">Responsable du traitement</a></li>
+      <li><a href="#s2">Le principe&nbsp;: local d'abord</a></li>
+      <li><a href="#s3">Données traitées avec un compte</a></li>
+      <li><a href="#s4">Publicité et fonctionnalités optionnelles</a></li>
+      <li><a href="#s5">Finalités et bases légales</a></li>
+      <li><a href="#s6">Données de santé et consentement</a></li>
+      <li><a href="#s7">Ce que voient les autres membres</a></li>
+      <li><a href="#s8">Hébergement et sous-traitants</a></li>
+      <li><a href="#s9">Durée de conservation</a></li>
+      <li><a href="#s10">Tes droits</a></li>
+      <li><a href="#s11">Sécurité</a></li>
+      <li><a href="#s12">Transferts hors UE</a></li>
+      <li><a href="#s13">Mineurs</a></li>
+      <li><a href="#s14">Modifications</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+    <section id="s1">
+      <h2 class="sec">Responsable du traitement</h2>
+      <p>L'application <strong>DrinkLog</strong> (« l'application », « nous ») est éditée par <strong>Ken Lambert</strong>, en tant que développeur individuel.</p>
+      <p>Pour toute question concernant cette politique ou tes données personnelles, ou pour exercer tes droits&nbsp;: <a href="mailto:drinklog.app@gmail.com">drinklog.app@gmail.com</a>.</p>
+    </section>
+
+    <section id="s2">
+      <h2 class="sec">Le principe&nbsp;: local d'abord</h2>
+      <p class="lede">DrinkLog fonctionne entièrement sans compte.</p>
+      <p>En mode « invité », toutes tes données — consommations enregistrées, pseudo, réglages (langue, thème, notifications) — sont stockées <strong>uniquement dans la mémoire de ton appareil</strong>. Elles ne sont ni transmises à l'éditeur, ni accessibles par lui, ni sauvegardées ailleurs. Si tu désinstalles l'application ou effaces ses données, elles sont perdues définitivement.</p>
+      <p>La <strong>création d'un compte est facultative</strong>. Elle sert à&nbsp;: sauvegarder tes données, les retrouver sur un autre appareil, et utiliser les groupes (classements, discussion, alertes de dépassement).</p>
+    </section>
+
+    <section id="s3">
+      <h2 class="sec">Données traitées lorsque tu crées un compte</h2>
+      <ul class="body">
+        <li><strong>Identifiants de connexion</strong>&nbsp;: ton adresse e-mail et ton mot de passe. Le mot de passe est stocké sous forme hachée (jamais en clair) par notre prestataire d'authentification.</li>
+        <li><strong>Profil</strong>&nbsp;: le pseudo que tu choisis et un identifiant technique de compte.</li>
+        <li><strong>Tes consommations synchronisées</strong>&nbsp;: type de boisson, format et volume, quantité, date et heure, et la note éventuelle que tu ajoutes.</li>
+        <li><strong>Groupes</strong>&nbsp;: les groupes que tu crées ou rejoins et ton appartenance à ceux-ci.</li>
+        <li><strong>Messages</strong>&nbsp;: le contenu et la date des messages que tu publies dans la discussion d'un groupe.</li>
+        <li><strong>Données techniques minimales</strong>&nbsp;: journaux de connexion gérés par l'hébergeur à des fins de sécurité et de bon fonctionnement.</li>
+      </ul>
+      <p>Nous ne collectons pas ta position géographique ni ta liste de contacts. Si des publicités sont affichées (voir §4), le module publicitaire de Google peut accéder à l'identifiant publicitaire de ton appareil&nbsp;; cet accès cesse si tu achètes la suppression des publicités.</p>
+    </section>
+
+    <section id="s4">
+      <h2 class="sec">Publicité et fonctionnalités optionnelles</h2>
+
+      <h3>Publicité</h3>
+      <p>L'application peut afficher des publicités fournies par <strong>Google AdMob</strong>. À ce titre, AdMob peut accéder à des identifiants de ton appareil (dont l'identifiant publicitaire) et à des données techniques (modèle d'appareil, adresse IP approximative) afin d'afficher et de mesurer les annonces.</p>
+      <p>Dans l'Espace économique européen, en Suisse et au Royaume-Uni, un écran de consentement s'affiche au premier lancement&nbsp;: tu choisis entre des publicités <strong>personnalisées</strong> et <strong>non personnalisées</strong>. Tu peux revenir sur ce choix à tout moment depuis les réglages. Sans consentement, seules des publicités non personnalisées sont diffusées.</p>
+      <p>Tu peux <strong>supprimer définitivement les publicités</strong> via un achat intégré. Une fois cet achat effectué, l'application ne charge plus le module publicitaire et aucune donnée n'est transmise à AdMob à cette fin.</p>
+
+      <h3>Achats intégrés</h3>
+      <p>L'achat « supprimer les publicités » est traité par <strong>Google Play</strong>. Nous recevons la confirmation de l'achat et un identifiant de transaction, jamais tes coordonnées bancaires, qui restent gérées par Google.</p>
+
+      <h3>Connexion avec Google</h3>
+      <p>Si tu choisis de te connecter via Google plutôt que par e-mail, Google nous communique l'adresse e-mail de ton compte Google et un identifiant de compte. Ce traitement est régi par la politique de confidentialité de Google.</p>
+
+      <h3>Notifications push</h3>
+      <p>Si tu actives les notifications, un « jeton d'appareil » fourni par le service <strong>Firebase Cloud Messaging</strong> (Google) est enregistré afin de pouvoir t'envoyer les alertes de dépassement même lorsque l'application est fermée. Ce jeton est supprimé lorsque tu désactives les notifications dans les réglages.</p>
+
+      <div class="callout">Toutes ces fonctionnalités ne sont pas nécessairement présentes dans la version que tu utilises. Lorsqu'elles sont absentes ou désactivées, aucune donnée n'est transmise à Google à ce titre.</div>
+    </section>
+
+    <section id="s5">
+      <h2 class="sec">Finalités et bases légales</h2>
+      <p>Nous traitons tes données uniquement pour les finalités suivantes&nbsp;:</p>
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr><th>Finalité</th><th>Données concernées</th><th>Base légale (RGPD)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Créer et sécuriser ton compte</td><td>E-mail, mot de passe, identifiant</td><td>Exécution du contrat (fourniture du service)</td></tr>
+            <tr><td>Sauvegarder et synchroniser tes consommations</td><td>Consommations, profil</td><td>Exécution du contrat et ton consentement (voir §6)</td></tr>
+            <tr><td>Faire fonctionner les groupes (classements, discussion, alertes)</td><td>Pseudo, totaux, messages, appartenance</td><td>Exécution du contrat</td></tr>
+            <tr><td>Envoyer les notifications push</td><td>Jeton d'appareil</td><td>Ton consentement (activation dans les réglages)</td></tr>
+            <tr><td>Afficher et mesurer les publicités</td><td>Identifiant publicitaire, données techniques</td><td>Ton consentement (publicités personnalisées) ou intérêt légitime (publicités non personnalisées)</td></tr>
+            <tr><td>Gérer l'achat « sans publicité »</td><td>Confirmation et identifiant de transaction</td><td>Exécution du contrat</td></tr>
+            <tr><td>Assurer la sécurité et prévenir les abus</td><td>Journaux techniques</td><td>Intérêt légitime</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="s6">
+      <h2 class="sec">Données de santé et consentement</h2>
+      <p>Les informations relatives à ta consommation d'alcool peuvent constituer des <strong>données concernant la santé</strong> au sens de l'article&nbsp;9 du RGPD.</p>
+      <p>Lorsque tu crées un compte et actives la synchronisation, tu donnes ton <strong>consentement explicite</strong> au traitement de ces données pour les finalités décrites au §5. Tu peux <strong>retirer ce consentement à tout moment</strong> en supprimant ton compte (voir §10). L'application reste alors utilisable en mode invité, sans aucun envoi de données.</p>
+    </section>
+
+    <section id="s7">
+      <h2 class="sec">Ce que voient les autres membres d'un groupe</h2>
+      <p>Quand tu rejoins un groupe, ses autres membres peuvent voir&nbsp;:</p>
+      <ul class="body">
+        <li>ton <strong>pseudo</strong>&nbsp;;</li>
+        <li>ton <strong>total de litres</strong> sur la période affichée (semaine, mois, année ou total)&nbsp;;</li>
+        <li>les <strong>messages</strong> que tu publies dans la discussion du groupe.</li>
+      </ul>
+      <p>Les autres membres <strong>ne voient pas le détail de tes consommations</strong> (quelle boisson, quel jour, quelle note) — uniquement des totaux agrégés. Le code d'invitation d'un groupe permet d'y entrer&nbsp;: ne le partage qu'avec des personnes de confiance. Tu peux quitter un groupe depuis l'application&nbsp;; les messages que tu y as déjà envoyés peuvent y rester visibles pour les autres membres.</p>
+    </section>
+
+    <section id="s8">
+      <h2 class="sec">Hébergement et sous-traitants</h2>
+      <p>DrinkLog fait appel à des prestataires qui traitent des données <strong>pour notre compte et selon nos instructions</strong>&nbsp;:</p>
+      <ul class="body">
+        <li><strong>Supabase</strong> — base de données, authentification et hébergement. Les données sont stockées sur des serveurs situés dans l'<strong>Union européenne</strong>.</li>
+        <li><strong>Google AdMob</strong> — affichage et mesure des publicités, lorsque celles-ci sont activées (voir §4).</li>
+        <li><strong>Google</strong> — Firebase Cloud Messaging pour l'envoi des notifications push, et « Se connecter avec Google » si tu utilises cette option (voir §4).</li>
+        <li><strong>Google Play</strong> assure la distribution de l'application et le traitement des achats intégrés, et peut fournir à l'éditeur des statistiques d'installation agrégées et anonymes.</li>
+      </ul>
+      <p>Nous ne vendons ni ne louons tes données. Nous ne les communiquons à aucun autre tiers, sauf obligation légale (par exemple une réquisition judiciaire).</p>
+    </section>
+
+    <section id="s9">
+      <h2 class="sec">Durée de conservation</h2>
+      <ul class="body">
+        <li><strong>Consommations, profil, messages</strong>&nbsp;: conservés tant que ton compte existe.</li>
+        <li><strong>Suppression d'une consommation</strong> dans l'application&nbsp;: appliquée immédiatement, y compris sur le serveur.</li>
+        <li><strong>Suppression de ton compte</strong>&nbsp;: l'ensemble de tes données personnelles (compte, consommations, appartenances aux groupes, messages) est effacé sous <strong>30 jours</strong> au maximum. Des sauvegardes techniques chiffrées peuvent subsister un court délai supplémentaire avant leur rotation.</li>
+        <li><strong>Mode invité</strong>&nbsp;: aucune conservation sur nos serveurs&nbsp;; tout reste sur ton appareil.</li>
+        <li><strong>Achat « sans publicité »</strong>&nbsp;: la preuve d'achat est conservée le temps nécessaire pour maintenir cet avantage sur ton compte ou ton appareil, et pour nos obligations comptables.</li>
+      </ul>
+    </section>
+
+    <section id="s10">
+      <h2 class="sec">Tes droits</h2>
+      <p>Conformément au RGPD, tu disposes des droits d'<strong>accès</strong>, de <strong>rectification</strong>, d'<strong>effacement</strong>, de <strong>limitation</strong>, d'<strong>opposition</strong>, de <strong>portabilité</strong>, et du droit de <strong>retirer ton consentement</strong>.</p>
+      <ul class="body">
+        <li><strong>Accès et rectification</strong>&nbsp;: une partie se fait directement dans l'application (profil, liste des consommations).</li>
+        <li><strong>Effacement</strong>&nbsp;: supprime ton compte depuis les réglages, ou écris-nous.</li>
+        <li><strong>Portabilité et autres demandes</strong>&nbsp;: écris à <a href="mailto:drinklog.app@gmail.com">drinklog.app@gmail.com</a>. Nous répondons dans un délai d'un mois.</li>
+      </ul>
+      <p>Tu peux également introduire une réclamation auprès de la <strong>CNIL</strong> (<a href="https://www.cnil.fr">www.cnil.fr</a>), autorité de contrôle compétente en France.</p>
+    </section>
+
+    <section id="s11">
+      <h2 class="sec">Sécurité</h2>
+      <p>Les échanges entre l'application et nos serveurs sont chiffrés (HTTPS/TLS). Les mots de passe sont hachés. L'accès aux données est <strong>cloisonné par utilisateur</strong> au niveau de la base&nbsp;: chaque personne ne peut lire que ses propres données, et au sein d'un groupe seuls les totaux et messages destinés au groupe sont visibles.</p>
+      <p>Aucun système n'est infaillible. Si tu penses avoir découvert une faille de sécurité, préviens-nous à <a href="mailto:drinklog.app@gmail.com">drinklog.app@gmail.com</a>.</p>
+    </section>
+
+    <section id="s12">
+      <h2 class="sec">Transferts hors Union européenne</h2>
+      <p>Les données de compte et de consommation sont hébergées dans l'Union européenne. Les services fournis par Google (publicité AdMob, notifications push, connexion Google, achats intégrés) peuvent impliquer un transfert vers les États-Unis, encadré par les <strong>clauses contractuelles types</strong> de la Commission européenne et/ou le cadre de protection des données UE–États-Unis.</p>
+    </section>
+
+    <section id="s13">
+      <h2 class="sec">Mineurs</h2>
+      <p>DrinkLog traite de la consommation d'alcool et est <strong>réservée aux personnes ayant l'âge légal pour consommer de l'alcool</strong> dans leur pays (18&nbsp;ans en France). L'application n'est pas destinée aux mineurs et nous ne collectons pas sciemment leurs données. Si tu penses qu'un mineur nous a transmis des données, contacte-nous pour leur suppression.</p>
+    </section>
+
+    <section id="s14">
+      <h2 class="sec">Modifications de cette politique</h2>
+      <p>Cette politique peut évoluer (nouvelle fonctionnalité, changement de prestataire, évolution réglementaire). La date de <strong>dernière mise à jour</strong> indiquée en haut de cette page identifie la version en vigueur. En cas de changement important, nous t'en informerons dans l'application.</p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Une question sur cette politique ou sur tes données&nbsp;? Écris à <a href="mailto:drinklog.app@gmail.com">drinklog.app@gmail.com</a>.</p>
+    <p>DrinkLog — éditée par Ken Lambert. Politique en vigueur au 1<sup>er</sup> septembre 2026.</p>
+  </footer>
+
+</div>
