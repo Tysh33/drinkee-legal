@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>DrinkLog — nouveau mot de passe</title>
+<title>Drinkee — nouveau mot de passe</title>
 <style>
   :root { color-scheme: dark; }
   * { box-sizing: border-box; }
@@ -23,8 +23,16 @@
   input {
     width: 100%; padding: 12px 14px; font-size: 15px; border-radius: 12px;
     border: 1px solid #333; background: #1C1C1C; color: #EDEDED; outline: none;
+    box-sizing: border-box;
   }
   input:focus { border-color: #F5A623; }
+  .pwWrap { position: relative; }
+  .pwWrap input { padding-right: 42px; }
+  .pwToggle {
+    position: absolute; top: 0; right: 2px; bottom: 0; width: auto; margin: 0;
+    display: flex; align-items: center;
+    background: none; border: none; cursor: pointer; font-size: 17px; padding: 0 10px; color: #9C9C9C;
+  }
   button {
     width: 100%; margin-top: 20px; padding: 13px; font-size: 15px; font-weight: 700;
     border: none; border-radius: 13px; background: #F5A623; color: #1A1A1A; cursor: pointer;
@@ -39,7 +47,7 @@
 </head>
 <body>
   <div class="card">
-    <div class="brand">🍺 DRINKLOG</div>
+    <div class="brand">🍺 DRINKEE</div>
 
     <div id="loading">
       <h1>Un instant…</h1>
@@ -48,23 +56,29 @@
 
     <form id="form" class="hide" autocomplete="off">
       <h1>Nouveau mot de passe</h1>
-      <p>Choisis un nouveau mot de passe, puis retourne dans l'application DrinkLog pour te connecter.</p>
+      <p>Choisis un nouveau mot de passe, puis retourne dans l'application Drinkee pour te connecter.</p>
       <label for="pw">Nouveau mot de passe (6 caractères min.)</label>
-      <input id="pw" type="password" autocomplete="new-password" minlength="6">
+      <div class="pwWrap">
+        <input id="pw" type="password" autocomplete="new-password" minlength="6">
+        <button type="button" class="pwToggle" data-for="pw" aria-label="Afficher le mot de passe">👁️</button>
+      </div>
       <label for="pw2">Confirme le mot de passe</label>
-      <input id="pw2" type="password" autocomplete="new-password" minlength="6">
+      <div class="pwWrap">
+        <input id="pw2" type="password" autocomplete="new-password" minlength="6">
+        <button type="button" class="pwToggle" data-for="pw2" aria-label="Afficher le mot de passe">👁️</button>
+      </div>
       <button id="submit" type="submit">Enregistrer</button>
       <div id="formMsg" class="msg"></div>
     </form>
 
     <div id="bad" class="hide">
       <h1>Lien invalide ou expiré</h1>
-      <p>Ce lien de réinitialisation n'est plus valable. Ouvre l'application DrinkLog et redemande un e-mail.</p>
+      <p>Ce lien de réinitialisation n'est plus valable. Ouvre l'application Drinkee et redemande un e-mail.</p>
     </div>
 
     <div id="done" class="hide">
       <h1>Mot de passe modifié ✓</h1>
-      <p>Tu peux fermer cette page, ouvrir l'application DrinkLog et te connecter avec ton nouveau mot de passe.</p>
+      <p>Tu peux fermer cette page, ouvrir l'application Drinkee et te connecter avec ton nouveau mot de passe.</p>
     </div>
   </div>
 
@@ -77,6 +91,16 @@
 
   const $ = (id) => document.getElementById(id);
   const show = (id) => { for (const s of ["loading","form","bad","done"]) $(s).classList.toggle("hide", s !== id); };
+
+  document.querySelectorAll(".pwToggle").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const input = $(btn.dataset.for);
+      const nowText = input.type === "password";
+      input.type = nowText ? "text" : "password";
+      btn.textContent = nowText ? "🙈" : "👁️";
+      btn.setAttribute("aria-label", nowText ? "Masquer le mot de passe" : "Afficher le mot de passe");
+    });
+  });
 
   let ready = false;
   const markReady = () => { ready = true; show("form"); };
