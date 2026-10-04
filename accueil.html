@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Drinkee — suivi de consommation d'alcool, seul ou entre amis</title>
+<meta name="description" content="Drinkee : l'application Android pour suivre ta consommation d'alcool, seul ou en partageant tes totaux avec tes amis. Android app to track your alcohol consumption, alone or with friends.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Public+Sans:wght@400;500;600&display=swap">
+
+<style>
+  :root {
+    --paper:      #FCFBF9;
+    --paper-2:    #F5F2EC;
+    --ink:        #1A1917;
+    --ink-soft:   #55524C;
+    --ink-faint:  #8A867E;
+    --rule:       #E7E2D9;
+    --accent:     #B45309;
+    --accent-ink: #96450A;
+    --accent-weak:#FAF2E6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:      #141311;
+      --paper-2:    #1D1B17;
+      --ink:        #ECE8E1;
+      --ink-soft:   #ABA69C;
+      --ink-faint:  #7C776D;
+      --rule:       #2E2B25;
+      --accent:     #E7A34A;
+      --accent-ink: #F0B978;
+      --accent-weak:#241D11;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Public Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 46rem; margin: 0 auto; padding: clamp(2rem, 6vw, 4.5rem) clamp(1.1rem, 5vw, 2.4rem) 5rem; }
+
+  .eyebrow { font-size: .74rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--accent-ink); margin: 0 0 .8rem; }
+  h1 {
+    font-family: "Newsreader", Georgia, serif; font-weight: 500;
+    font-size: clamp(2.4rem, 8vw, 3.6rem); line-height: 1.05; letter-spacing: -.01em; margin: 0; text-wrap: balance;
+  }
+  h2 {
+    font-family: "Newsreader", Georgia, serif; font-weight: 500; font-size: 1.5rem; line-height: 1.25;
+    margin: 2.6rem 0 .6rem; padding-top: 1.6rem; border-top: 1px solid var(--rule); text-wrap: balance;
+  }
+  .lead { color: var(--ink-soft); font-size: 1.12rem; margin: 1rem 0 0; max-width: 38rem; }
+  p, li { max-width: 38rem; }
+  ul { padding-left: 1.3rem; margin: .6rem 0; }
+  li { margin: .5rem 0; }
+  li::marker { color: var(--accent); }
+  a { color: var(--accent-ink); text-underline-offset: 3px; }
+  strong { font-weight: 600; }
+
+  .box {
+    background: var(--accent-weak); border: 1px solid var(--rule); border-left: 3px solid var(--accent);
+    border-radius: 6px; padding: .9rem 1.1rem; margin: 1.4rem 0; font-size: .96rem; color: var(--ink-soft);
+  }
+  .box p { margin: 0; }
+
+  footer { margin-top: 3.2rem; padding-top: 1.6rem; border-top: 1px solid var(--rule); color: var(--ink-faint); font-size: .9rem; }
+  footer p { margin: .3rem 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">Application Android</p>
+    <h1>Drinkee</h1>
+    <p class="lead">Garde un œil sur ce que tu bois, à ton rythme et à ta façon&nbsp;: seul pour toi-même, ou en partageant tes totaux avec tes amis.</p>
+  </header>
+
+  <main>
+    <h2>Ce que fait Drinkee</h2>
+    <ul>
+      <li><strong>Note en quelques secondes.</strong> Choisis ta boisson (bière, vin, champagne, cocktail, shot, spiritueux), le format et la quantité. Tu peux modifier ou supprimer une entrée, ou en enregistrer une passée.</li>
+      <li><strong>Vois tes habitudes se dessiner.</strong> Un journal avec graphique par jour, semaine ou mois (volume, alcool pur, budget) et un calendrier du mois.</li>
+      <li><strong>Entre amis.</strong> Crée ou rejoins un groupe avec un code d'invitation, compare vos totaux à titre de statistiques et discutez dans le groupe.</li>
+      <li><strong>Tes données, ton choix.</strong> Drinkee est utilisable sans compte. Le compte, facultatif, sert à synchroniser tes données et à utiliser les groupes. Dans un groupe, seuls ton pseudo et tes totaux sont visibles, jamais le détail de tes consommations.</li>
+      <li><strong>Simple, dans ta langue.</strong> Français, anglais, espagnol. Thème clair ou sombre.</li>
+    </ul>
+
+    <div class="box"><p>Drinkee est un outil de suivi et de prise de conscience, pas une incitation à consommer. Réservée aux personnes ayant l'âge légal de consommer de l'alcool dans leur pays. L'abus d'alcool est dangereux pour la santé. À consommer avec modération.</p></div>
+
+    <h2>Disponibilité</h2>
+    <p>Drinkee est une application Android, bientôt disponible sur Google Play. Elle est gratuite, avec des publicités discrètes&nbsp;; un achat unique permet de les retirer.</p>
+
+    <h2>Données et vie privée</h2>
+    <ul>
+      <li><a href="./">Politique de confidentialité</a></li>
+      <li><a href="suppression.html">Supprimer mon compte et mes données</a></li>
+    </ul>
+
+    <h2>Contact</h2>
+    <p>Une question, un problème&nbsp;? Écris-nous à <a href="mailto:drinkee.application@gmail.com">drinkee.application@gmail.com</a>. Drinkee est éditée par Ken Lambert, développeur individuel.</p>
+
+    <h2 lang="en">Drinkee <span style="font-weight:400; color:var(--ink-faint);">(English)</span></h2>
+    <div lang="en">
+      <p><strong>Drinkee</strong> is an Android app to keep track of what you drink, your way: just for yourself, or by sharing your totals with friends. Log a drink in seconds, see your habits in a journal with day, week and month charts (volume, pure alcohol, spending), and create or join a private group with an invite code to compare totals as plain statistics and chat. It works fully without an account; an account is optional and only used to sync your data and use groups. Available in French, English and Spanish.</p>
+      <p>Drinkee is a tracking and awareness tool, not an invitation to drink. For people of legal drinking age only. Alcohol abuse is dangerous for your health. Please drink responsibly.</p>
+      <p>Coming soon on Google Play. Free, with light ads; a one-time purchase removes them. <a href="./">Privacy policy</a> (French) · <a href="suppression.html">Delete my account and data</a> · <a href="mailto:drinkee.application@gmail.com">drinkee.application@gmail.com</a></p>
+    </div>
+  </main>
+
+  <footer>
+    <p>Drinkee — éditée par Ken Lambert, développeur individuel.</p>
+    <p><a href="./">Politique de confidentialité</a> · <a href="suppression.html">Supprimer mon compte</a> · <a href="mailto:drinkee.application@gmail.com">drinkee.application@gmail.com</a></p>
+  </footer>
+
+</div>
+</body>
+</html>
